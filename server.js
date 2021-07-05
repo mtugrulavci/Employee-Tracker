@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const fs = require('fs');
 const inquirer = require('inquirer');
 const db = require('./database/connection');
-const {allDepartmens,allRoles} = require('./utils/generate-tables');
+//const { allDepartments,allRoles, addDepartment, allEmployees }= require('./utils/generate-tables');
 const cTable = require('console.table');
 const mysql = require('mysql2');
 
@@ -12,15 +12,67 @@ db.connect(err => {
     init();
   });
 
+  const allDepartments = ()=> {
+    const sql = `SELECT * FROM department`;
+    db.query(sql, (err, rows) => {
+      if (err) throw err;
+      console.table(rows);
+    });
+    init();
+
+};
+const allRoles = ()=> {
+    const sql = `SELECT name, title, salary FROM role
+    LEFT JOIN department ON department.id = role.department_id`;
+    db.query(sql, (err, rows) => {
+      if (err) throw err;
+      console.table(rows);
+    });
+};
+const allEmployees = ()=> {
+    const sql = `SELECT first_name, last_name, salary, title, name FROM employee
+    LEFT JOIN role ON role.id = employee.role_id
+    LEFT JOIN  department ON department.id = role.department_id`;
+    db.query(sql, (err, rows) => {
+      if (err) throw err;
+      console.table(rows);
+    });
+};
+
+const addDepartment = () =>{
+    inquirer.prompt([
+        { type: 'input',
+          name: 'department',
+          message: 'Please indicate department name',
+          validate: input => {
+            if (input) {
+              return true;
+            } else {
+              console.log('Please indicate department name');
+              return false;
+            }
+          }
+        }]).then(answers=>{
+       const sql = `INSERT INTO department (name)
+       VALUES (?)`;
+    db.query(sql, answers.department, (err, result) => {
+      if (err) throw err;
+      console.log('Department '+ answers.department+ ' added to the department table');
+    });
+        })
+};
+
+
 const init = () => {
-  console.log(chalk.bold.rgb(10, 100, 200)`
-  *********************
-  *                   *
-  *  EMPLOYEE MANAGER * 
-  *                   *
-  *********************
-  `);
-  inquirer.prompt([
+    console.log(chalk.bold.rgb(10, 100, 200)`
+    *********************
+    *                   *
+    *  EMPLOYEE MANAGER * 
+    *                   *
+    *********************
+    `);
+
+ return  inquirer.prompt([
         { 
             type: 'list',
             name: 'options',
@@ -35,11 +87,20 @@ const init = () => {
         }
     ]).then((answers)=>{
         if(answers.options === 'view all departments'){
-            allDepartmens();
+            allDepartments();
         }
         if(answers.options === 'view all roles'){
             allRoles();
         }
+        if(answers.options === 'view all employees'){
+            allEmployees();
+        }
+        if(answers.options === 'add a department'){
+            addDepartment();
+        }
+        if(answers.options === 'add a role'){
+            addRole();
+        }
     })
-
 };
+
