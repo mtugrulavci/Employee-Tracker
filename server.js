@@ -9,7 +9,7 @@ const mysql = require('mysql2');
 
 db.connect(err => {
     if (err) throw err;
-    init();
+    board();
   });
 
   const allDepartments = ()=> {
@@ -19,14 +19,24 @@ db.connect(err => {
       console.table(rows);
     });
     init();
-
 };
+const board =() =>{
+console.log(chalk.bold.rgb(10, 100, 200)`
+=======================
+=                     = 
+=  EMPLOYEE TRACKER   =
+=                     =
+=======================    `);
+init();
+}
+
 const allRoles = ()=> {
     const sql = `SELECT name, title, salary FROM role
     LEFT JOIN department ON department.id = role.department_id`;
     db.query(sql, (err, rows) => {
       if (err) throw err;
       console.table(rows);
+      init();
     });
 };
 const allEmployees = ()=> {
@@ -36,6 +46,7 @@ const allEmployees = ()=> {
     db.query(sql, (err, rows) => {
       if (err) throw err;
       console.table(rows);
+      init();
     });
 };
 
@@ -59,18 +70,12 @@ const addDepartment = () =>{
       if (err) throw err;
       console.log('Department '+ answers.department+ ' added to the department table');
     });
+    init();
         })
 };
 
 
 const init = () => {
-    console.log(chalk.bold.rgb(10, 100, 200)`
-    *********************
-    *                   *
-    *  EMPLOYEE MANAGER * 
-    *                   *
-    *********************
-    `);
 
  return  inquirer.prompt([
         { 
