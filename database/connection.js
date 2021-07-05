@@ -1,5 +1,7 @@
 const mysql = require('mysql2');
 //connect to databae
+const cTable = require('console.table');
+const chalk = require('chalk');
 const database = mysql.createConnection(
     {
      host: "localhost",
@@ -9,7 +11,7 @@ const database = mysql.createConnection(
     // password : ""; 
      database: "organization"   
     },
-    console.log("Connected to the election database.")
+    console.log("Connected to the employee database.")
 
 );
 module.exports = database;

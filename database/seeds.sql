@@ -1,15 +1,10 @@
-INSERT INTO employee(first_name,last_name,role_id,manager_id)
-VALUES 
-    ('John', 'Doe', 1,1),
-    ('Jane', 'Doe', 2,1),
-    ('Sam', 'Thully', 3,2),
-    ('Robert', 'Kikao', 4,1),
-    ('Esma', 'Kir', 5,2),
-    ('Mark', 'You', 6,1),
-    ('Simone', 'Salem', 7,3),
-    ('Tom', 'Kicker', 8,3),
-    ('Selim', 'Can', 9,3),
-    ('Monica', 'Sevan', 10,2);
+
+INSERT INTO department (name)
+VALUES ('Sales'),
+       ('Operations'),
+       ('Information Technologies'),
+       ('Human Resource');
+
 
 INSERT INTO role (title, salary, department_id)
 VALUES
@@ -24,8 +19,15 @@ VALUES
 ('HR Manager', 75000.5, 4),
 ('HR Associate', 60000.5, 4);
 
-INSERT INTO department (name)
-VALUES ('Sales'),
-       ('Operations'),
-       ('Information Technologies'),
-       ('Human Resource');
+INSERT INTO employee(first_name,last_name,role_id,manager_id)
+VALUES 
+    ('John', 'Doe', 1,1),
+    ('Jane', 'Doe', 2,1),
+    ('Sam', 'Thully', 3,2),
+    ('Robert', 'Kikao', 4,1),
+    ('Esma', 'Kir', 5,2),
+    ('Mark', 'You', 6,1),
+    ('Simone', 'Salem', 7,3),
+    ('Tom', 'Kicker', 8,3),
+    ('Selim', 'Can', 9,3),
+    ('Monica', 'Sevan', 10,2);
