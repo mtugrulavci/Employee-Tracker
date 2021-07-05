@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const fs = require('fs');
 const inquirer = require('inquirer');
 const db = require('./database/connection');
-//const {allDepartmens,allRoles} = require('./utils/generate-tables');
+const {allDepartmens,allRoles} = require('./utils/generate-tables');
 const cTable = require('console.table');
 const mysql = require('mysql2');
 
@@ -11,23 +11,6 @@ db.connect(err => {
     if (err) throw err;
     init();
   });
-
-allDepartmens = ()=> {
-    const sql = `SELECT * FROM department`;
-    db.query(sql, (err, rows) => {
-      if (err) throw err;
-      console.table(rows);
-    });
-};
-allRoles = ()=> {
-    const sql = `SELECT name, title, salary FROM role
-    LEFT JOIN department ON department.id = role.department_id`;
-    db.query(sql, (err, rows) => {
-      if (err) throw err;
-      console.table(rows);
-    });
-};
-
 
 const init = () => {
   console.log(chalk.bold.rgb(10, 100, 200)`

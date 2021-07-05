@@ -9,16 +9,15 @@ const allDepartmens = ()=> {
       if (err) throw err;
       console.table(rows);
     });
-}
+};
 const allRoles = ()=> {
-    const sql1 = `SELECT roles.title, department.name FROM roles
-    LEFT JOIN department ON department.id= roles.department_id`;
-    db.query(sql1, (err, rows) => {
+    const sql = `SELECT name, title, salary FROM role
+    LEFT JOIN department ON department.id = role.department_id`;
+    db.query(sql, (err, rows) => {
       if (err) throw err;
       console.table(rows);
     });
 };
-
 
 
 
